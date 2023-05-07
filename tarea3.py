@@ -23,7 +23,7 @@ THEN = 16
 
 letters = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
 numbres = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
-operator = {'+', '*', '/', '-'}
+operators = {'+', '*', '/', '-'}
 
 pila = []
 index = 10
@@ -40,12 +40,12 @@ def run():
 
     # fill pila
     for e in cadena:
-        pila.append(e)
+        pila.append(e.lower())
 
 
     while len(pila) > 0:
         status = estado1()
-
+        # print(f'status {status} : numero {ENTERO}')
         # Responde segun el status
         if (status == ERROR): # Error
             print(f"Error de token\n")
@@ -135,7 +135,7 @@ def estado1():
     elif c == 'i': # Integer
         return estado14()
 
-    elif c == 'S': #String
+    elif c == 's': #String
         return estado17()
 
     elif c == 'b': # Boolean
@@ -147,6 +147,7 @@ def estado1():
     # Compare 'c' with letters
     for e in letters:
         if e == c:
+            print("In letters")
             return estado4()
 
     # Compare 'c' with numbers
@@ -181,17 +182,26 @@ def estado4():
 
 def estado5(c):
     pila.append(c)
-    retorno = c
     return ID
 
 def estado6():
     return ASIGNAR
 
 def estado7():
-    pass
+    global lexema
+    c = pila.pop()
 
-def estado8():
-    pass
+    lexema = lexema + c
+
+    for n in numbres:
+        if n == c:
+            return estado7()
+        
+    return estado8(c)
+
+def estado8(c):
+    pila.append(c)
+    return NUMERO
 
 def estado9():
     return COMA
@@ -209,31 +219,121 @@ def estado13():
     return DIV
 
 def estado14():
-    pass
+    global lexema
+    c = pila.pop()
+
+    lexema = lexema + c
+
+    if c == 'n':
+        return estado15()
+    
+    elif c == 'f':
+        return estado37()
+
+    for l in operators:
+        if c == l:
+            return estado5()
+
+    lexema = lexema[: len(lexema) - 1]
+    return estado4()
 
 def estado15():
-    pass
+    global lexema
+    c = pila.pop()
+
+    lexema = lexema + c
+    if c == 't':
+        return estado16()
+    
+    for l in operators:
+        if c == l:
+            return estado5(c)
+
+    lexema = lexema[: len(lexema) - 1]
+    return estado4()
 
 def estado16():
-    pass
+    return ENTERO
 
 def estado17():
-    pass
+    global lexema
+    c = pila.pop()
+    lexema = lexema + c
+
+    if c == 't':
+        return estado18()
+        
+    for l in operators:
+        if c == l:
+            return estado5(c)
+
+    lexema = lexema[: len(lexema) - 1]
+    return estado4()
+    
+
 
 def estado18():
-    pass
+    global lexema
+    c = pila.pop()
+    lexema = lexema + c
+
+    if c == 'r':
+        return estado19()
+        
+    for l in operators:
+        if c == l:
+            return estado5(c)
+
+    lexema = lexema[: len(lexema) - 1]
+    return estado4()
 
 def estado19():
-    pass
+    global lexema
+    c = pila.pop()
+    lexema = lexema + c
+
+    if c == 'i':
+        return estado20()
+        
+    for l in operators:
+        if c == l:
+            return estado5(c)
+
+    lexema = lexema[: len(lexema) - 1]
+    return estado4()
 
 def estado20():
-    pass
+    global lexema
+    c = pila.pop()
+    lexema = lexema + c
+
+    if c == 'n':
+        return estado21()
+        
+    for l in operators:
+        if c == l:
+            return estado5(c)
+
+    lexema = lexema[: len(lexema) - 1]
+    return estado4()
 
 def estado21():
-    pass
+    global lexema
+    c = pila.pop()
+    lexema = lexema + c
+
+    if c == 'g':
+        return estado22()
+        
+    for l in operators:
+        if c == l:
+            return estado5(c)
+
+    lexema = lexema[: len(lexema) - 1]
+    return estado4()
 
 def estado22():
-    pass
+    return CADENA
 
 def estado23():
     pass
@@ -283,5 +383,6 @@ def estado37():
 def estado38():
     pass
 
+# Entry point
 if __name__ == '__main__':
     run()
