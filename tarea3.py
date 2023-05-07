@@ -40,7 +40,8 @@ def run():
 
     # fill pila
     for e in cadena:
-        pila.append(e.lower())
+        if e != ' ':
+            pila.append(e.lower())
 
 
     while len(pila) > 0:
@@ -147,7 +148,7 @@ def estado1():
     # Compare 'c' with letters
     for e in letters:
         if e == c:
-            print("In letters")
+            # print("In letters")
             return estado4()
 
     # Compare 'c' with numbers
@@ -164,7 +165,10 @@ def estado3():
 
 def estado4():
     global lexema
-    c = pila.pop()
+    if len(pila) > 0:
+        c = pila.pop()
+    else:
+        return estado5()
 
     lexema = lexema + c
 
@@ -336,52 +340,181 @@ def estado22():
     return CADENA
 
 def estado23():
-    pass
+    global lexema
+    c = pila.pop()
+    lexema = lexema + c
+
+    if c == 'o':
+        return estado24()
+        
+    for l in operators:
+        if c == l:
+            return estado5(c)
+
+    lexema = lexema[: len(lexema) - 1]
+    return estado4()
 
 def estado24():
-    pass
+    global lexema
+    c = pila.pop()
+    lexema = lexema + c
+
+    if c == 'o':
+        return estado25()
+        
+    for l in operators:
+        if c == l:
+            return estado5(c)
+
+    lexema = lexema[: len(lexema) - 1]
+    return estado4()
 
 def estado25():
-    pass
+    global lexema
+    c = pila.pop()
+    lexema = lexema + c
+
+    if c == 'l':
+        return estado26()
+        
+    for l in operators:
+        if c == l:
+            return estado5(c)
+
+    lexema = lexema[: len(lexema) - 1]
+    return estado4()
 
 def estado26():
-    pass
+    global lexema
+    c = pila.pop()
+    lexema = lexema + c
+
+    if c == 'e':
+        return estado27()
+        
+    for l in operators:
+        if c == l:
+            return estado5(c)
+
+    lexema = lexema[: len(lexema) - 1]
+    return estado4()
 
 def estado27():
-    pass
+    global lexema
+    c = pila.pop()
+    lexema = lexema + c
+
+    if c == 'a':
+        return estado28()
+        
+    for l in operators:
+        if c == l:
+            return estado5(c)
+
+    lexema = lexema[: len(lexema) - 1]
+    return estado4()
 
 def estado28():
-    pass
+    global lexema
+    c = pila.pop()
+    lexema = lexema + c
+
+    if c == 'n':
+        return estado29()
+        
+    for l in operators:
+        if c == l:
+            return estado5(c)
+
+    lexema = lexema[: len(lexema) - 1]
+    return estado4()
 
 def estado29():
-    pass
+    return BOOLEAN
 
 def estado30():
-    pass
+    global lexema
+    c = pila.pop()
+    lexema = lexema + c
+
+    if c == 'o':
+        return estado31()
+        
+    for l in operators:
+        if c == l:
+            return estado5(c)
+
+    lexema = lexema[: len(lexema) - 1]
+    return estado4()
 
 def estado31():
-    pass
+    global lexema
+    c = pila.pop()
+    lexema = lexema + c
+
+    if c == 'u':
+        return estado32()
+        
+    for l in operators:
+        if c == l:
+            return estado5(c)
+
+    lexema = lexema[: len(lexema) - 1]
+    return estado4()
 
 def estado32():
-    pass
+    global lexema
+    c = pila.pop()
+    lexema = lexema + c
+
+    if c == 'b':
+        return estado33()
+        
+    for l in operators:
+        if c == l:
+            return estado5(c)
+
+    lexema = lexema[: len(lexema) - 1]
+    return estado4()
 
 def estado33():
-    pass
+    global lexema
+    c = pila.pop()
+    lexema = lexema + c
+
+    if c == 'l':
+        return estado34()
+        
+    for l in operators:
+        if c == l:
+            return estado5(c)
+
+    lexema = lexema[: len(lexema) - 1]
+    return estado4()
 
 def estado34():
-    pass
+    global lexema
+    c = pila.pop()
+    lexema = lexema + c
+
+    if c == 'e':
+        return estado35()
+        
+    for l in operators:
+        if c == l:
+            return estado5(c)
+
+    lexema = lexema[: len(lexema) - 1]
+    return estado4()
 
 def estado35():
-    pass
+    return DOUBLE
 
 def estado36():
-    pass
+    return ERROR
 
 def estado37():
-    pass
-
-def estado38():
-    pass
+    return IF
 
 # Entry point
 if __name__ == '__main__':
